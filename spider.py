@@ -10,8 +10,10 @@ from collections import deque
 import collections
 
 from string import punctuation
+import nltk
 from nltk import pos_tag, word_tokenize
-from nltk.corpus import wordnet, stopwords
+from nltk.corpus import stopwords
+nltk.download('stopwords')
 
 url = "http://www.cse.ust.hk"
 

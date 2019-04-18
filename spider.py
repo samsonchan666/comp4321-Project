@@ -1,5 +1,5 @@
 import sys
-import pickle
+from sqlitedict import SqliteDict
 import re
 from datetime import datetime
 import requests
@@ -30,9 +30,15 @@ word2wordID = collections.OrderedDict()
 invertedIndex = collections.OrderedDict()
 
 
+def save2SqliteDict(_dict: collections.OrderedDict, _dir):
+    sqliteDict = SqliteDict(_dir, autocommit=True)
+    for key, value in _dict.items():
+        sqliteDict[key] = value
+
+
 def pushInvertedIndex(freqlist, pageID):
     for word, freq in freqlist.items():
-        if word not in invertedIndex:
+        if word2wordID[word] not in invertedIndex:
             invertedIndex[word2wordID[word]] = [[pageID, freq]]
         else:
             invertedIndex[word2wordID[word]].append([pageID, freq])
@@ -115,9 +121,9 @@ def crawl(url):
 
 
 crawl(url)
-pickle.dump(url2pageID, open('url2pageID.p', 'wb'))
-pickle.dump(forwardIndex, open('forwardIndex.p', 'wb'))
-pickle.dump(word2wordID, open('word2wordID.p', 'wb'))
-pickle.dump(invertedIndex, open('invertedIndex.p', 'wb'))
+# save2SqliteDict(url2pageID, './url2pageID.sqlite')
+# save2SqliteDict(forwardIndex, './forwardIndex.sqlite')
+# save2SqliteDict(word2wordID, './word2wordID.sqlite')
+# save2SqliteDict(invertedIndex, './invertedIndex.sqlite')
 
 sys.exit()

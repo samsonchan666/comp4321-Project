@@ -1,10 +1,7 @@
-import pickle
+from sqlitedict import SqliteDict
 
 # Url -> [PageID, PageTitle, LastModified, Size, WordFreqDict, Children]
-url2pageID = pickle.load(open('url2pageID.p', 'rb'))
-forwardIndex = pickle.load(open('forwardIndex.p', 'rb'))
-word2wordID = pickle.load(open('word2wordID.p', 'rb'))
-invertedIndex = pickle.load(open('invertedIndex.p', 'rb'))
+url2pageID = SqliteDict('./url2pageID.sqlite', autocommit=True)
 
 text_file = open("spider_result.txt", "w")
 # for url, pageData in url2pageID.items():

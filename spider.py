@@ -20,13 +20,15 @@ url = "http://www.cse.ust.hk"
 # Create queue
 queue = deque()
 
-# Maintains list of visited pages
-visited_list = []
-
-# Url -> [PageID, PageTitle, LastModified, Size, WordFreqDict, Children]
+# Url -> PageID
 url2pageID = collections.OrderedDict()
+# PageID -> [PageTitle, LastModified, Size, WordFreqDict, Children]
+pageID2Meta = collections.OrderedDict()
+# PageID -> [keywords]
 forwardIndex = collections.OrderedDict()
+# Word -> WordID
 word2wordID = collections.OrderedDict()
+# WordID -> [PageID]
 invertedIndex = collections.OrderedDict()
 
 
@@ -76,40 +78,64 @@ def countWordFreq(tokens):
     return freqlist
 
 
-def crawl(url):
-    if len(visited_list) > 30:
+def saveHTML(pageID, html):
+    html_file = open("./html/" + str(pageID) + ".html", "w")
+    html = str(html).replace('\n', '<br>')
+    html_file.write(str(html.encode('ascii', 'ignore')))
+    html_file.close()
+
+
+def crawl(url, parentID):
+    if len(url2pageID) > 30:
         return
     try:
         urlf = requests.get(url)
         soup = BeautifulSoup(urlf.text, 'html.parser')
         tokens = tokenizeAndClean(soup.text)
 
+        pageTitle = soup.find("title").text
+
         # Append URL to PageID scheme
         currentPageID = len(url2pageID)
+        if currentPageID in url2pageID.values():
+            print("Warning, same index")
         print(currentPageID)
-        pageTitle = soup.find("title").text
-        url2pageID[url] = [currentPageID, pageTitle, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), len(tokens), {}, []]
+
+        url2pageID[url] = currentPageID
+        pageID2Meta[currentPageID] = [pageTitle,
+                                      datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                      len(tokens), {}, []]
         # Append forward index
         forwardIndex[currentPageID] = tokens
         # Append inverted index
         freqlist = countWordFreq(tokens)
-        url2pageID[url][4] = freqlist
+        pageID2Meta[currentPageID][3] = freqlist
         pushWord2wordID(freqlist)
         pushInvertedIndex(freqlist, currentPageID)
 
-        visited_list.append(url)
+        # Assign parent-child relationship
+        if parentID != -1:
+            if currentPageID not in pageID2Meta[parentID][4]:
+                pageID2Meta[parentID][4].append(currentPageID)
+
+        # saveHTML(currentPageID, soup)
 
         urls = soup.findAll("a", href=True)
         for i in urls:
             # Complete relative URLs and strip trailing slash
             complete_url = urljoin(url, i["href"]).rstrip('/')
 
+            # Assign parent-child relationship for visited/indexed children
+            if complete_url in url2pageID.keys():
+                if url2pageID[complete_url] not in pageID2Meta[currentPageID][4]:
+                    pageID2Meta[currentPageID][4].append(url2pageID[complete_url])
+
             # Check if the URL already exists in the queue or visited list
-            if (complete_url in queue) or (complete_url in visited_list):
+            queue_0 = [q[0] for q in queue]
+            if (complete_url in queue_0) or (complete_url in url2pageID.keys()):
                 continue
             else:
-                url2pageID[url][5].append(complete_url)
-                queue.append(complete_url)
+                queue.append([complete_url, currentPageID])
 
     except Exception as e:
         print(e)
@@ -117,11 +143,12 @@ def crawl(url):
     # Pop one URL from the queue from the left side so that it can be crawled
     current = queue.popleft()
     # Recursive call to crawl until the queue is populated with 100 URLs
-    crawl(current)
+    crawl(current[0], current[1])
 
 
-crawl(url)
+crawl(url, -1)
 # save2SqliteDict(url2pageID, './url2pageID.sqlite')
+# save2SqliteDict(pageID2Meta, './pageID2Meta.sqlite')
 # save2SqliteDict(forwardIndex, './forwardIndex.sqlite')
 # save2SqliteDict(word2wordID, './word2wordID.sqlite')
 # save2SqliteDict(invertedIndex, './invertedIndex.sqlite')

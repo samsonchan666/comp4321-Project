@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0bc488a4-9666-4f27-ab53-86d8e8360498" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forwardIndex.p" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/invertedIndex.p" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/forwardIndex.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/forwardIndex.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/invertedIndex.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/invertedIndex.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/url2pageID.p" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/word2wordID.p" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/url2pageID.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/url2pageID.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/word2wordID.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/word2wordID.sqlite" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,38 +16,58 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/spider.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-896">
-              <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/readme.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/spider.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-200">
+                  <caret line="118" column="52" lean-forward="true" selection-start-line="118" selection-start-column="52" selection-end-line="118" selection-end-column="52" />
+                  <folding>
+                    <element signature="e#0#10#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/test.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="279">
+                  <caret line="26" column="80" selection-start-line="26" selection-start-column="74" selection-end-line="26" selection-end-column="80" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/readme.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/spider.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-1815">
+                  <caret line="34" column="50" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="50" />
+                  <folding>
+                    <element signature="e#0#10#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -60,6 +79,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>print</find>
+      <find>visited_list</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -69,8 +89,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/readme.txt" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/spider.py" />
+        <option value="$PROJECT_DIR$/test.py" />
       </list>
     </option>
   </component>
@@ -117,7 +137,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.spider">
+  <component name="RunManager" selected="Python.test">
     <configuration name="spider" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="comp4321" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -162,8 +182,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.spider" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.spider" />
       </list>
     </recent_temporary>
   </component>
@@ -193,13 +213,13 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19246031" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.19246031" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32382312" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.37089872" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.37089872" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32952926" />
@@ -217,8 +237,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/spider.py</url>
-          <line>128</line>
-          <option name="timeStamp" value="1" />
+          <line>155</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/spider.py</url>
+          <line>100</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -245,20 +270,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://C:/Python/Python37-32/Lib/ssl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="63" />
+        <state relative-caret-position="138">
+          <caret line="910" selection-start-line="910" selection-end-line="910" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-896">
-          <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
+        <state relative-caret-position="-200">
+          <caret line="118" column="52" lean-forward="true" selection-start-line="118" selection-start-column="52" selection-end-line="118" selection-end-column="52" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="26" column="80" selection-start-line="26" selection-start-column="74" selection-end-line="26" selection-end-column="80" />
         </state>
       </provider>
     </entry>

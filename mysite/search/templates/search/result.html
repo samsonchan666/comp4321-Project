@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<link rel="stylesheet" href="{% static 'search/css/bootstrap.css' %}">
+<body style="padding-left: 15px; padding-top: 15px">
+    {% for result in query_results %}
+    <div class="row">
+        <div class="col-sm-2">Score: </div>
+        <div class="col-sm-10">
+            <a href={{ result.2 }}>{{ result.1 }} </a>
+            <br>    
+            <a href={{ result.2 }}>{{ result.2 }}</a>
+            <br>
+            {{ result.3 }}, {{ result.4 }}
+            <br>
+            {% for key, value in result.5.items %}
+            {{key}} {{value}};
+            {% endfor %}
+            <br>
+            Parent's Link:
+            <br>
+            {% for pl in result.6 %}
+            {{ pl }}
+            <br>
+            {% endfor %}
+            Children's Link:
+            <br>
+            {% for cl in result.7 %}
+            {{ cl }}
+            <br>
+            {% endfor %}
+        </div>
+    </div>    
+    {% endfor %}
+
+    <!-- <div class="row">
+        <div class="col-sm-2">col-sm-2</div>
+        <div class="col-sm-10">col-sm-10</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">col-sm-2</div>
+        <div class="col-sm-10">col-sm-10</div>
+      </div> -->
+
+</body>
+
+<form method="get" action="/search">
+    <button type="submit">Return</button>
+</form>
+
+</html>

@@ -85,7 +85,7 @@ def saveHTML(pageID, html):
     html_file.close()
 
 
-def crawl(url, parentID):
+def crawl(url, parent_IDs : list):
     if len(url2pageID) > 30:
         return
     try:
@@ -93,18 +93,27 @@ def crawl(url, parentID):
         soup = BeautifulSoup(urlf.text, 'html.parser')
         tokens = tokenizeAndClean(soup.text)
 
-        pageTitle = soup.find("title").text
+        page_title = soup.find("title").text
+        # last_mod_day = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        last_mod_day = datetime.now().strftime("%Y-%m-%d")
+        try:
+            raw_date = soup.find('span', {"class": "pull-right"})
+            pattern = re.compile("\d+-\d+-\d+")
+            last_mod_day = re.findall(pattern, raw_date.text)[0]
+        except AttributeError:
+            pass
 
-        # Append URL to PageID scheme
         currentPageID = len(url2pageID)
         if currentPageID in url2pageID.values():
             print("Warning, same index")
         print(currentPageID)
 
+        # Index the URL
         url2pageID[url] = currentPageID
-        pageID2Meta[currentPageID] = [pageTitle,
-                                      datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                      len(tokens), {}, []]
+        pageID2Meta[currentPageID] = [page_title,
+                                      last_mod_day,
+                                      len(str(soup.contents)),
+                                      {}, []]
         # Append forward index
         forwardIndex[currentPageID] = tokens
         # Append inverted index
@@ -114,9 +123,10 @@ def crawl(url, parentID):
         pushInvertedIndex(freqlist, currentPageID)
 
         # Assign parent-child relationship
-        if parentID != -1:
-            if currentPageID not in pageID2Meta[parentID][4]:
-                pageID2Meta[parentID][4].append(currentPageID)
+        for parent_id in parent_IDs:
+            if parent_id != -1:
+                if currentPageID not in pageID2Meta[parent_id][4]:
+                    pageID2Meta[parent_id][4].append(currentPageID)
 
         # saveHTML(currentPageID, soup)
 
@@ -130,12 +140,18 @@ def crawl(url, parentID):
                 if url2pageID[complete_url] not in pageID2Meta[currentPageID][4]:
                     pageID2Meta[currentPageID][4].append(url2pageID[complete_url])
 
-            # Check if the URL already exists in the queue or visited list
+            # Pre-assign parent-child relationship for children in queue
             queue_0 = [q[0] for q in queue]
+            if complete_url in queue_0:
+                idx = queue_0.index(complete_url)
+                if currentPageID not in queue[idx][1]:
+                    queue[idx][1].append(currentPageID)
+
+            # Check if the URL already exists in the queue or visited list
             if (complete_url in queue_0) or (complete_url in url2pageID.keys()):
                 continue
             else:
-                queue.append([complete_url, currentPageID])
+                queue.append([complete_url, [currentPageID]])
 
     except Exception as e:
         print(e)
@@ -146,11 +162,11 @@ def crawl(url, parentID):
     crawl(current[0], current[1])
 
 
-crawl(url, -1)
-# save2SqliteDict(url2pageID, './url2pageID.sqlite')
-# save2SqliteDict(pageID2Meta, './pageID2Meta.sqlite')
-# save2SqliteDict(forwardIndex, './forwardIndex.sqlite')
-# save2SqliteDict(word2wordID, './word2wordID.sqlite')
-# save2SqliteDict(invertedIndex, './invertedIndex.sqlite')
+crawl(url, [-1])
+save2SqliteDict(url2pageID, './url2pageID.sqlite')
+save2SqliteDict(pageID2Meta, './pageID2Meta.sqlite')
+save2SqliteDict(forwardIndex, './forwardIndex.sqlite')
+save2SqliteDict(word2wordID, './word2wordID.sqlite')
+save2SqliteDict(invertedIndex, './invertedIndex.sqlite')
 
 sys.exit()

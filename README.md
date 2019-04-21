@@ -22,12 +22,12 @@ python spider.py
 ```
 Extra library:
 * sqlitedict
-* bs4
+* beautifulsoup4
 * nltk
 
 To install the extra library
 ```
-pip install sqlitedict bs4 nltk
+pip install sqlitedict beautifulsoup4 nltk
 ```
 
 ##  Django Web Server

@@ -1,36 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0bc488a4-9666-4f27-ab53-86d8e8360498" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mysite/db.sqlite3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/mysite/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/mysite/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/mysite/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/mysite/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/scripts/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/static/search/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/templates/search/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/templates/search/result.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysite/search/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forwardIndex.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/forwardIndex.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/invertedIndex.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/invertedIndex.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pageID2Meta.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/pageID2Meta.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider_result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/spider_result.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/url2pageID.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/url2pageID.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/word2wordID.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/word2wordID.sqlite" afterDir="false" />
-    </list>
+    <list default="true" id="0bc488a4-9666-4f27-ab53-86d8e8360498" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,11 +10,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="12" column="11" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="11" />
+            <state relative-caret-position="50">
+              <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -57,10 +28,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
+            <state split_layout="FIRST">
               <first_editor relative-caret-position="100">
                 <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
               </first_editor>
@@ -223,14 +194,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.19246031" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32382312" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32382312" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" weight="0.32952926" />
@@ -277,6 +247,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="100">
+            <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/readme.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -293,18 +273,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="100">
-            <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-          </first_editor>
-          <second_editor />
+        <state relative-caret-position="50">
+          <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
         </state>
       </provider>
     </entry>

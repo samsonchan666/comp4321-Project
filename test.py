@@ -1,9 +1,9 @@
 from sqlitedict import SqliteDict
 
 # Url -> PageID
-url2pageID = SqliteDict('./url2pageID.sqlite', autocommit=True)
+url2pageID = SqliteDict('./db/url2pageID.sqlite', autocommit=True)
 # PageID -> [PageTitle, LastModified, Size, WordFreqDict, Children]
-pageID2Meta = SqliteDict('./pageID2Meta.sqlite', autocommit=True)
+pageID2Meta = SqliteDict('./db/pageID2Meta.sqlite', autocommit=True)
 
 text_file = open("spider_result.txt", "w")
 

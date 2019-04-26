@@ -1,4 +1,5 @@
 import re
+from search.scripts import porter
 from string import punctuation
 from nltk import pos_tag, word_tokenize
 from nltk.corpus import stopwords
@@ -17,6 +18,7 @@ def tokenizeAndClean(doc):
     # Remove stopwords
     stop_words = set(stopwords.words('english'))
     tokens = [w for w in tokens if w not in stop_words]
+    tokens = [porter.Porter(w) for w in tokens]
     return tokens
 
 """"To-do retrive function. Should return a dictionary with output like phase 1"""
@@ -24,7 +26,7 @@ def retrive():
     return
 
 def retriveWebPageInfo():
-    url2pageID = SqliteDict('../url2pageID.sqlite', autocommit=True)
+    url2pageID = SqliteDict('../db/url2pageID.sqlite', autocommit=True)
     return url2pageID
 
 def splitQuery(query):

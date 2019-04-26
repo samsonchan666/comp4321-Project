@@ -37,12 +37,6 @@ title2TitleID = collections.OrderedDict()
 invertedIndexTitle = collections.OrderedDict()
 
 
-def save2SqliteDict(_dict: collections.OrderedDict, _dir):
-    sqliteDict = SqliteDict(_dir, autocommit=True)
-    for key, value in _dict.items():
-        sqliteDict[key] = value
-
-
 def pushInvertedIndex(freqlist, pageID):
     for word, freq in freqlist.items():
         if word2wordID[word] not in invertedIndex:
@@ -56,6 +50,22 @@ def pushWord2wordID(freqlist):
         if word not in word2wordID:
             currentWordID = len(word2wordID)
             word2wordID[word] = currentWordID
+
+
+def indexTitle(title_tokens):
+    for title_token in title_tokens:
+        if title_token not in title2TitleID:
+            current_title_id = len(title2TitleID)
+            title2TitleID[title_token] = current_title_id
+
+
+def pushTitleInverted(title_tokens, page_id):
+    for title_token in title_tokens:
+        token_id = title2TitleID[title_token]
+        if token_id not in invertedIndexTitle:
+            invertedIndexTitle[token_id] = [page_id]
+        else:
+            invertedIndexTitle[token_id].append(page_id)
 
 
 def tokenizeAndClean(doc):
@@ -92,26 +102,16 @@ def countWordFreq(tokens):
 
 
 def saveHTML(pageID, html):
-    html_file = open("./html/" + str(pageID) + ".html", "w")
+    html_file = open("./mysite/search/templates/search/html/" + str(pageID) + ".html", "w")
     html = str(html).replace('\n', '<br>')
     html_file.write(str(html.encode('ascii', 'ignore')))
     html_file.close()
 
 
-def indexTitle(title_tokens):
-    for title_token in title_tokens:
-        if title_token not in title2TitleID:
-            current_title_id = len(title2TitleID)
-            title2TitleID[title_token] = current_title_id
-
-
-def pushTitleInverted(title_tokens, page_id):
-    for title_token in title_tokens:
-        token_id = title2TitleID[title_token]
-        if token_id not in invertedIndexTitle:
-            invertedIndexTitle[token_id] = [page_id]
-        else:
-            invertedIndexTitle[token_id].append(page_id)
+def save2SqliteDict(_dict: collections.OrderedDict, _dir):
+    sqliteDict = SqliteDict(_dir, autocommit=True)
+    for key, value in _dict.items():
+        sqliteDict[key] = value
 
 
 def crawl(url, parent_IDs : list):
@@ -206,12 +206,12 @@ def crawl(url, parent_IDs : list):
 
 
 crawl(url, [-1])
-save2SqliteDict(url2pageID, './db/url2pageID.sqlite')
-save2SqliteDict(pageID2Meta, './db/pageID2Meta.sqlite')
-save2SqliteDict(forwardIndex, './db/forwardIndex.sqlite')
-save2SqliteDict(word2wordID, './db/word2wordID.sqlite')
-save2SqliteDict(invertedIndex, './db/invertedIndex.sqlite')
-save2SqliteDict(title2TitleID, './db/title2TitleID.sqlite')
-save2SqliteDict(invertedIndexTitle, './db/invertedIndexTitle.sqlite')
+# save2SqliteDict(url2pageID, './db/url2pageID.sqlite')
+# save2SqliteDict(pageID2Meta, './db/pageID2Meta.sqlite')
+# save2SqliteDict(forwardIndex, './db/forwardIndex.sqlite')
+# save2SqliteDict(word2wordID, './db/word2wordID.sqlite')
+# save2SqliteDict(invertedIndex, './db/invertedIndex.sqlite')
+# save2SqliteDict(title2TitleID, './db/title2TitleID.sqlite')
+# save2SqliteDict(invertedIndexTitle, './db/invertedIndexTitle.sqlite')
 
 sys.exit()

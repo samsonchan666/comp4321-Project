@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .forms import QueryForm
 from search.scripts import utils
+from django.template import Context, loader
 
 query_results = [
-    ["1", "title1", "url1", "lastmod1", "size1", {"key1": 1, "key2":2}, ["p1", "p2"], ["c1", "c2"]],
-    ["2", "title2", "url2", "lastmod2", "size2", {"key1": 1, "key2":2}, ["p1", "p2"], ["c1", "c2"]],
+    ["1", "title1", 0, "lastmod1", "size1", {"key1": 1, "key2":2}, ["p1", "p2"], ["c1", "c2"]],
+    ["2", "title2", 1, "lastmod2", "size2", {"key1": 1, "key2":2}, ["p1", "p2"], ["c1", "c2"]],
     ]
 
 def index(request):
@@ -22,10 +23,14 @@ def result(request):
 
             """ To do - Retrival function """
             url2pageID = utils.retriveWebPageInfo()
-            # result = utils.retrive()
-            # queries = utils.tokenizeAndClean(query)
+            queries = utils.tokenizeAndClean(query)
+            # query_results = retrive(queries)
             return render(request, 'search/result.html', {'query_results': query_results})
         else:
             return render(request, 'search/index.html')
+
+def remote(request, page_id):
+    template = "./search/html/" + str(page_id) + ".html"
+    return render(request, template)
   
     

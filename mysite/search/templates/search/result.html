@@ -4,27 +4,27 @@
 <body style="padding-left: 15px; padding-top: 15px">
     {% for result in query_results %}
     <div class="row">
-        <div class="col-sm-2">Score: </div>
+        <div class="col-sm-2">Score: {{ result.0 }}</div>
         <div class="col-sm-10">
-            <a href="remote/{{ result.2 }} ">{{ result.1 }} </a>
+            <a href="remote/{{ result.3 }} ">{{ result.1 }} </a>
             <br>    
-            <a href="remote/{{ result.2 }} ">{{ result.2 }}</a>
+            <a href="remote/{{ result.3 }} ">{{ result.2 }}</a>
             <br>
-            {{ result.3 }}, {{ result.4 }}
+            {{ result.4 }}, {{ result.5 }}
             <br>
-            {% for key, value in result.5.items %}
+            {% for key, value in result.6.items %}
             {{key}} {{value}};
             {% endfor %}
             <br>
             Parent's Link:
             <br>
-            {% for pl in result.6 %}
+            {% for pl in result.7 %}
             {{ pl }}
             <br>
             {% endfor %}
             Children's Link:
             <br>
-            {% for cl in result.7 %}
+            {% for cl in result.8 %}
             {{ cl }}
             <br>
             {% endfor %}

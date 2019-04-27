@@ -25,11 +25,12 @@ queue = deque()
 url2pageID = collections.OrderedDict()
 # PageID -> [PageTitle, LastModified, Size, WordFreqDict, Children]
 pageID2Meta = collections.OrderedDict()
-# PageID -> [keywords]
+"""To-do forward index should use word id"""
+# PageID -> [[WordID, frequency]]
 forwardIndex = collections.OrderedDict()
 # Word -> WordID
 word2wordID = collections.OrderedDict()
-# WordID -> [PageID]
+# WordID -> [[PageID, frequency, tf_idf]]
 invertedIndex = collections.OrderedDict()
 # Title -> TitleID
 title2TitleID = collections.OrderedDict()
@@ -40,9 +41,9 @@ invertedIndexTitle = collections.OrderedDict()
 def pushInvertedIndex(freqlist, pageID):
     for word, freq in freqlist.items():
         if word2wordID[word] not in invertedIndex:
-            invertedIndex[word2wordID[word]] = [[pageID, freq]]
+            invertedIndex[word2wordID[word]] = [[pageID, freq, 0]]
         else:
-            invertedIndex[word2wordID[word]].append([pageID, freq])
+            invertedIndex[word2wordID[word]].append([pageID, freq, 0])
 
 
 def pushWord2wordID(freqlist):
@@ -110,8 +111,10 @@ def saveHTML(pageID, html):
 
 def save2SqliteDict(_dict: collections.OrderedDict, _dir):
     sqliteDict = SqliteDict(_dir, autocommit=True)
+    print("Saving database to" + _dir)
     for key, value in _dict.items():
         sqliteDict[key] = value
+    sqliteDict.close()
 
 
 def crawl(url, parent_IDs : list):
@@ -146,15 +149,17 @@ def crawl(url, parent_IDs : list):
                                       last_mod_day,
                                       len(str(soup.contents)),
                                       {}, []]
-        # Append forward index
-        forwardIndex[currentPageID] = tokens.copy()
-        forwardIndex[currentPageID].extend(bigrams(tokens))
-        # Append inverted index
+
         freqlist = countWordFreq(tokens)
         freqlist_bi = countWordFreq(bigrams(tokens))
         freqlist.update(freqlist_bi)
         pageID2Meta[currentPageID][3] = freqlist
         pushWord2wordID(freqlist)
+
+        # Append forward index
+        tokens_id = [[word2wordID[x[0]], x[1]] for x in list(freqlist.items())]
+        forwardIndex[currentPageID] = tokens_id
+        # Append inverted index
         pushInvertedIndex(freqlist, currentPageID)
 
         # Index the title
@@ -206,12 +211,20 @@ def crawl(url, parent_IDs : list):
 
 
 crawl(url, [-1])
-# save2SqliteDict(url2pageID, './db/url2pageID.sqlite')
-# save2SqliteDict(pageID2Meta, './db/pageID2Meta.sqlite')
-# save2SqliteDict(forwardIndex, './db/forwardIndex.sqlite')
-# save2SqliteDict(word2wordID, './db/word2wordID.sqlite')
-# save2SqliteDict(invertedIndex, './db/invertedIndex.sqlite')
-# save2SqliteDict(title2TitleID, './db/title2TitleID.sqlite')
-# save2SqliteDict(invertedIndexTitle, './db/invertedIndexTitle.sqlite')
+save2SqliteDict(url2pageID, './db/url2pageID.sqlite')
+save2SqliteDict(pageID2Meta, './db/pageID2Meta.sqlite')
+save2SqliteDict(forwardIndex, './db/forwardIndex.sqlite')
+save2SqliteDict(word2wordID, './db/word2wordID.sqlite')
+save2SqliteDict(invertedIndex, './db/invertedIndex.sqlite')
+save2SqliteDict(title2TitleID, './db/title2TitleID.sqlite')
+save2SqliteDict(invertedIndexTitle, './db/invertedIndexTitle.sqlite')
 
 sys.exit()
+
+# x = forwardIndex[29]
+# z = [y[0] for y in x]
+# for _z in z:
+#     aa = invertedIndex[_z]
+#     bb = [cc[0] for cc in aa]
+#     if 29 not in bb:
+#         print("error")

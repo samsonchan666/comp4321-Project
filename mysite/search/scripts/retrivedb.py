@@ -1,55 +1,52 @@
 import math
 from sqlitedict import SqliteDict
 
-def docID2UrlName(doc_id, db_ref):
-    url2pageID = db_ref[0]
+url2pageID = SqliteDict('../db/url2pageID.sqlite')
+pageID2Meta = SqliteDict('../db/pageID2Meta.sqlite')
+forwardIndex = SqliteDict('../db/forwardIndex.sqlite')
+docNorm = SqliteDict('../db/docNorm.sqlite')
+word2wordID = SqliteDict('../db/word2wordID.sqlite')
+invertedIndex = SqliteDict('../db/invertedIndex.sqlite')
+title2TitleID = SqliteDict('../db/title2TitleID.sqlite')
+forwardIndexTitle = SqliteDict('../db/forwardIndexTitle.sqlite')
+invertedIndexTitle = SqliteDict('../db/invertedIndexTitle.sqlite')
+titleNorm = SqliteDict('../db/titleNorm.sqlite')
+
+def docID2UrlName(doc_id):
     return list(url2pageID.keys())[list(url2pageID.values()).index(int(doc_id))]
 
-def findParent(pageID, metadb):
+def findParent(pageID):
     _parents = []
-    for id, meta in metadb.items():
+    for id, meta in pageID2Meta.items():
         if pageID in meta[4]:
             _parents.append(id)
     return _parents
 
-def format_result(cos_sim_list, db_ref):
-    pageID2Meta = SqliteDict('../db/pageID2Meta.sqlite')
+def format_result(cos_sim_list):
     query_results = []
     for doc in cos_sim_list:
         doc_id = doc[0]
         score  = doc[1]
         title = pageID2Meta[doc_id][0]
         last_mod = pageID2Meta[doc_id][1]
-        url_name = docID2UrlName(doc_id, db_ref)
+        url_name = docID2UrlName(doc_id)
         size = pageID2Meta[doc_id][2]
         word_freq = pageID2Meta[doc_id][3]
         word_freq_list = sorted(list(word_freq.items()), key=lambda x: x[1], reverse=True)
         word_freq_list = word_freq_list[:5]
-        parent = findParent(doc_id, pageID2Meta)
-        parent = [docID2UrlName(p, db_ref) for p in parent]
+        parent = findParent(doc_id)
+        parent = [docID2UrlName(p) for p in parent]
         children = pageID2Meta[doc_id][4]
-        children = [docID2UrlName(c, db_ref) for c in children]
+        children = [docID2UrlName(c) for c in children]
         result = [score, title, url_name, doc_id,
                 last_mod, size, word_freq_list, parent, 
                 children]
         query_results.append(result)
-    pageID2Meta.close()
     return query_results
 
 """"To-do retrive function. Should return a dictionary with output like phase 1"""
 def retrive(queries):
     # queries = ["comput", "scienc"]
-    url2pageID = SqliteDict('../db/url2pageID.sqlite')
-    forwardIndex = SqliteDict('../db/forwardIndex.sqlite')
-    docNorm = SqliteDict('../db/docNorm.sqlite')
-    word2wordID = SqliteDict('../db/word2wordID.sqlite')
-    invertedIndex = SqliteDict('../db/invertedIndex.sqlite')
-    title2TitleID = SqliteDict('../db/title2TitleID.sqlite')
-    forwardIndexTitle = SqliteDict('../db/forwardIndexTitle.sqlite')
-    invertedIndexTitle = SqliteDict('../db/invertedIndexTitle.sqlite')
-    titleNorm = SqliteDict('../db/titleNorm.sqlite')
-    # total_doc_no = float(len(url2pageID))
-
     #########################################################################
     title_score_dict = {}
     title_id = -1
@@ -91,9 +88,6 @@ def retrive(queries):
             print("Query word not indexed:", query)
             continue
         posting_list = invertedIndex[word_id]
-        # df = float(len(posting_list))
-        # idf = math.log(total_doc_no / df, 2)
-        # tf_max = float(max([x[1] for x in posting_list]))
         for document in posting_list:
             doc_id = document[0]
             # Pre-computed tf-idf
@@ -131,14 +125,22 @@ def retrive(queries):
 
     print(cos_sim_list)
     
+    result = format_result(cos_sim_list)
+    # url2pageID.close()
+    # forwardIndex.close()
+    # docNorm.close()
+    # word2wordID.close()
+    # invertedIndex.close()
+    # pageID2Meta.close()
+    return result
 
-    db_ref = [url2pageID, forwardIndex, docNorm, word2wordID, invertedIndex]
-    
-    result = format_result(cos_sim_list, db_ref)
-    url2pageID.close()
-    forwardIndex.close()
-    docNorm.close()
-    word2wordID.close()
-    invertedIndex.close()
-
+def reformatPeterResult(peter_results):
+    reform = []
+    for peter_result in peter_results:
+        doc_id = peter_result["index"]
+        """Just add up the similarity of title and keywords"""
+        similarity = peter_result["titleSimilarity"] + peter_result["contentSimilarity"]
+        reform.append([doc_id, similarity])
+    reform = sorted(reform, key=lambda x: x[1], reverse=True)
+    result = format_result(reform)
     return result

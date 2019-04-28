@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import QueryForm
-from search.scripts import utils, retrivedb
+from search.scripts import utils, retrivedb, cosineSimilarity
 from django.template import Context, loader
 
 query_results = [
@@ -18,14 +18,16 @@ def result(request):
         if form.is_valid():
             query = form.cleaned_data['query']
             # Split double quotes phrases
-            # queries = query.split()
             queries = utils.splitQuery(query)
 
             """ To do - Retrival function """
-            url2pageID = utils.retriveWebPageInfo()
             queries = utils.clean(queries)
             print(queries)
-            query_results = retrivedb.retrive(queries)
+
+            # query_results = retrivedb.retrive(queries)
+            """Peter's retrive function"""
+            peter_results = cosineSimilarity.runQuery(queries)
+            query_results = retrivedb.reformatPeterResult(peter_results)
             print("No of related pages:" + str(len(query_results)))
             return render(request, 'search/result.html', {'query_results': query_results})
         else:

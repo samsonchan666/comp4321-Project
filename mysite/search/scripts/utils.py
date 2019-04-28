@@ -7,6 +7,12 @@ from nltk.corpus import stopwords
 
 from sqlitedict import SqliteDict
 
+# split should be list with length >= 2
+def split2Str(split):
+    result = split[0]
+    for i in range(len(split)-1):
+        result += " " + split[i+1]
+    return result
 
 def clean(tokens):
     # Change to lower case
@@ -18,17 +24,25 @@ def clean(tokens):
     # Remove stopwords
     stop_words = set(stopwords.words('english'))
     tokens = [w for w in tokens if w not in stop_words]
-    tokens = [porter.Porter(w) for w in tokens]
+    # Apply stemming to unigram and bigram
+    for idx in range(len(tokens)):
+        if len(tokens[idx].split()) == 1:
+            tokens[idx] = porter.Porter(tokens[idx])
+        else:
+            stem_split = [porter.Porter(w) for w in tokens[idx].split()]
+            print(stem_split)
+            tokens[idx] = split2Str(stem_split)
+    # tokens = [porter.Porter(w) for w in tokens]
     return tokens
-
-def retriveWebPageInfo():
-    url2pageID = SqliteDict('../db/url2pageID.sqlite', autocommit=True)
-    return url2pageID
 
 def splitQuery(query):
     pattern = "\"(?:\w+(?: )?)+\"|\w+"
     p = re.compile(pattern)
     match = re.findall(p, query)     
-    for i in range(len(match)):
-        match[i] = match[i].replace("\"", "") 
+    no_query = len(match)
+    for i in range(no_query):
+        if "\"" in match[i]:
+            match[i] = match[i].replace("\"", "")
+            unigram = match[i].split()
+            match.extend(unigram)
     return match       

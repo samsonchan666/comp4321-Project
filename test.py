@@ -33,7 +33,6 @@ for query in queries:
         print("Title word not indexed:", query)
         continue
     posting_list = invertedIndexTitle[title_id]
-    # print(posting_list)
     for document in posting_list:
         doc_id = document[0]
         # Pre-computed tf-idf

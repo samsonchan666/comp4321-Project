@@ -30,7 +30,6 @@ def clean(tokens):
             tokens[idx] = porter.Porter(tokens[idx])
         else:
             stem_split = [porter.Porter(w) for w in tokens[idx].split()]
-            print(stem_split)
             tokens[idx] = split2Str(stem_split)
     # tokens = [porter.Porter(w) for w in tokens]
     return tokens

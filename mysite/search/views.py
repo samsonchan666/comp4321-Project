@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import QueryForm
+from .forms import QueryForm, ReQueryForm
 from search.scripts import utils, retrivedb, cosineSimilarity
 from django.template import Context, loader
 
@@ -17,10 +17,10 @@ def result(request):
         form = QueryForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
+            print(query)
             # Split double quotes phrases
             queries = utils.splitQuery(query)
-
-            """ To do - Retrival function """
+            # Clean, stem ...
             queries = utils.clean(queries)
             print(queries)
 
@@ -36,5 +36,21 @@ def result(request):
 def remote(request, page_id):
     template = "./search/html/" + str(page_id) + ".html"
     return render(request, template)
+
+def similar(request):
+    if request.method == 'GET':
+        form = ReQueryForm(request.GET)
+        if form.is_valid():
+            doc_id = form.cleaned_data['docId']
+            queries = retrivedb.getFreqWordAsQueryList(doc_id)
+            print(queries)
+
+            # query_results = retrivedb.retrive(queries)
+            """Peter's retrive function"""
+            peter_results = cosineSimilarity.runQuery(queries)
+            query_results = retrivedb.reformatPeterResult(peter_results)
+            return render(request, 'search/result.html', {'query_results': query_results})
+        else:
+            return render(request, 'search/index.html')
   
     

@@ -144,3 +144,10 @@ def reformatPeterResult(peter_results):
     reform = sorted(reform, key=lambda x: x[1], reverse=True)
     result = format_result(reform)
     return result
+
+def getFreqWordAsQueryList(doc_id):
+    word_freq = pageID2Meta[doc_id][3]
+    word_freq_list = sorted(list(word_freq.items()), key=lambda x: x[1], reverse=True)
+    top_5 = [w[0] for w in word_freq_list[:5]]
+    return top_5
+    

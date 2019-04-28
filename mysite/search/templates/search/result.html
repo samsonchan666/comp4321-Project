@@ -8,14 +8,17 @@
         <div class="col-sm-10">
             <a href="remote/{{ result.3 }} ">{{ result.1 }} </a>
             <br>    
-            <a href="remote/{{ result.3 }} ">{{ result.2 }}</a>
+            <a href="remote/{{ result.3 }} ">{{ result.2 }} </a>
             <br>
             {{ result.4 }}, {{ result.5 }}
             <br>
             {% for word_freq in result.6 %}
             {{word_freq.0}} {{word_freq.1}}
             {% endfor %}
-            <br>
+            <form method="get" action="/search/similar">
+                <input type="hidden" id="docId" name="docId" value={{ result.3 }}>
+                <button type="submit">Get Similar Page</button>
+            </form>
             Parent's Link:
             <br>
             {% for pl in result.7 %}

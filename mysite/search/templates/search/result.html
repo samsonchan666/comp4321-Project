@@ -12,8 +12,8 @@
             <br>
             {{ result.4 }}, {{ result.5 }}
             <br>
-            {% for key, value in result.6.items %}
-            {{key}} {{value}};
+            {% for word_freq in result.6 %}
+            {{word_freq.0}} {{word_freq.1}}
             {% endfor %}
             <br>
             Parent's Link:

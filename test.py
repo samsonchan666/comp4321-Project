@@ -15,11 +15,46 @@ word2wordID = SqliteDict('./db/word2wordID.sqlite')
 invertedIndex = SqliteDict('./db/invertedIndex.sqlite')
 # Title -> TitleID
 title2TitleID = SqliteDict('./db/title2TitleID.sqlite')
+# PageID -> [TitleID]
+forwardIndexTitle = SqliteDict('./db/forwardIndexTitle.sqlite')
 # TitleID -> [PageID]
 invertedIndexTitle = SqliteDict('./db/invertedIndexTitle.sqlite')
+# PageID -> title_norm
+titleNorm = SqliteDict('./db/titleNorm.sqlite')
 queries = ["comput", "scienc"]
+# queries = ["event"]
 
+title_score_dict = {}
+title_id = -1
+for query in queries:
+    if query in title2TitleID.keys():
+        title_id = title2TitleID[query]
+    else:
+        print("Title word not indexed:", query)
+        continue
+    posting_list = invertedIndexTitle[title_id]
+    # print(posting_list)
+    for document in posting_list:
+        doc_id = document[0]
+        # Pre-computed tf-idf
+        tf_idf = document[1]
+        # Accumulate the inner product
+        if doc_id not in title_score_dict:
+            title_score_dict[doc_id] = [tf_idf * 1, 1]
+        else:
+            title_score_dict[doc_id][0] += tf_idf * 1
+            title_score_dict[doc_id][1] += 1
 
+cos_sim_title = title_score_dict.copy()
+for doc_id, score in title_score_dict.items():
+    word_list = forwardIndexTitle[doc_id]
+    title_norm = titleNorm[doc_id]
+    query_norm = math.sqrt(title_score_dict[doc_id][1])
+    inner_prod = float(title_score_dict[doc_id][0])
+    cos_sim_title[doc_id] = inner_prod / (title_norm * query_norm)
+print(cos_sim_title)
+
+#########################################################################
 score_dict = {}
 word_id = -1
 total_doc_no = float(len(url2pageID))
@@ -27,7 +62,7 @@ for query in queries:
     if query in word2wordID.keys():
         word_id = word2wordID[query]
     else:
-        print("Query word not indexed")
+        print("Query word not indexed:", query)
         continue
     posting_list = invertedIndex[word_id]
     df = float(len(posting_list))
@@ -47,7 +82,7 @@ for query in queries:
 cos_sim = score_dict.copy()
 i = 0
 for doc_id, score in score_dict.items():
-    print(i, len(score_dict))
+    # print(i, len(score_dict))
     i += 1
     word_list = [x[0] for x in forwardIndex[doc_id]]
     doc_norm = docNorm[doc_id]
@@ -58,6 +93,19 @@ for doc_id, score in score_dict.items():
 cos_sim_list = list(cos_sim.items())
 cos_sim_list = sorted(cos_sim_list, key=lambda x: x[1], reverse=True)
 print(cos_sim_list)
+#########################################################################
+cos_sim_combined = cos_sim.copy()
+for doc_id, score in cos_sim_title.items():
+    if doc_id in cos_sim_combined:
+        cos_sim_combined[doc_id] += score
+    else:
+        cos_sim_combined[doc_id] = score
+
+cos_sim_list = list(cos_sim_combined.items())
+cos_sim_list = sorted(cos_sim_list, key=lambda x: x[1], reverse=True)
+
+print(cos_sim_list)
+#########################################################################
 
 url2pageID.close()
 pageID2Meta.close()

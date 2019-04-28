@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0bc488a4-9666-4f27-ab53-86d8e8360498" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cosineSimilarity.py" beforeDir="false" afterPath="$PROJECT_DIR$/cosineSimilarity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/docNorm.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/docNorm.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/forwardIndex.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/forwardIndex.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/invertedIndex.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/invertedIndex.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/invertedIndexTitle.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/invertedIndexTitle.sqlite" afterDir="false" />
@@ -10,12 +12,13 @@
       <change beforePath="$PROJECT_DIR$/db/title2TitleID.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/title2TitleID.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/url2pageID.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/url2pageID.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/word2wordID.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db/word2wordID.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/search/scripts/retrivedb.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/search/scripts/retrivedb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/search/scripts/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/search/scripts/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/search/templates/search/result.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/search/templates/search/result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/search/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/search/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider_result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/spider_result.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tfidf.py" beforeDir="false" afterPath="$PROJECT_DIR$/tfidf.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,11 +30,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/spider.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4100">
-                  <caret line="192" column="39" selection-start-line="192" selection-start-column="39" selection-end-line="192" selection-end-column="39" />
+                <state relative-caret-position="308">
+                  <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -39,11 +42,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+                <state relative-caret-position="25">
+                  <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
                   <folding>
                     <element signature="e#0#33#0" expanded="true" />
                   </folding>
@@ -75,12 +78,12 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/test.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="50">
-                  <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+                <state relative-caret-position="499">
+                  <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
                   <folding>
                     <element signature="e#0#33#0" expanded="true" />
                   </folding>
@@ -91,8 +94,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/spider.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="877">
-                  <caret line="221" selection-start-line="221" selection-end-line="221" />
+                <state relative-caret-position="127">
+                  <caret line="219" selection-start-line="219" selection-end-line="219" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -103,11 +106,20 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tfidf.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="275">
-                  <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+                <state relative-caret-position="375">
+                  <caret line="15" selection-start-line="15" selection-end-line="15" selection-end-column="22" />
                   <folding>
                     <element signature="e#0#33#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cosineSimilarity.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="181">
+                  <caret line="100" column="5" selection-start-line="100" selection-end-line="100" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
@@ -140,13 +152,14 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/porter.py" />
         <option value="$PROJECT_DIR$/spiderStem.py" />
+        <option value="$PROJECT_DIR$/cosineSimilarity.py" />
         <option value="$PROJECT_DIR$/spider.py" />
         <option value="$PROJECT_DIR$/tfidf.py" />
         <option value="$PROJECT_DIR$/test.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="85" />
     <option name="y" value="25" />
     <option name="width" value="1750" />
@@ -159,20 +172,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="comp4321" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comp4321" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -193,6 +193,27 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.test">
+    <configuration name="cosineSimilarity" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="comp4321" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cosineSimilarity.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="spider" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="comp4321" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -261,6 +282,7 @@
         <item itemvalue="Python.test" />
         <item itemvalue="Python.tfidf" />
         <item itemvalue="Python.spider" />
+        <item itemvalue="Python.cosineSimilarity" />
       </list>
     </recent_temporary>
   </component>
@@ -288,6 +310,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.19246031" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -313,8 +336,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/spider.py</url>
-          <line>221</line>
+          <line>228</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/cosineSimilarity.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -361,10 +389,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/readme.txt">
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/671489982/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+        <state relative-caret-position="224">
+          <caret line="2871" column="8" selection-start-line="2871" selection-start-column="8" selection-end-line="2871" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -378,34 +406,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/671489982/builtins.py">
+    <entry file="file://$PROJECT_DIR$/readme.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="2871" column="8" selection-start-line="2871" selection-start-column="8" selection-end-line="2871" selection-end-column="8" />
+        <state relative-caret-position="75">
+          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python/Python37-32/Lib/site-packages/sqlitedict.py">
+    <entry file="file://$PROJECT_DIR$/cosineSimilarity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5620">
-          <caret line="244" selection-start-line="244" selection-end-line="244" />
+        <state relative-caret-position="181">
+          <caret line="100" column="5" selection-start-line="100" selection-end-line="100" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tfidf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+        <state relative-caret-position="375">
+          <caret line="15" selection-start-line="15" selection-end-line="15" selection-end-column="22" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Python/Python37-32/Lib/site-packages/sqlitedict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1935">
+          <caret line="159" selection-start-line="159" selection-end-line="159" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="877">
-          <caret line="221" selection-start-line="221" selection-end-line="221" />
+        <state relative-caret-position="127">
+          <caret line="219" selection-start-line="219" selection-end-line="219" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -414,8 +449,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        <state relative-caret-position="499">
+          <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>

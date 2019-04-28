@@ -101,6 +101,7 @@ invDocFreq=calcIDFFromTF(termFreq)
 tfidf=calcTFIDF(termFreq, invDocFreq)
 
 queryString="These i guess will be done by a django part".strip()
+queries = ["comput", "scienc"]
 queryString=" ".join(queryString.split())
 if queryString=="":
 	print("Empty query!")

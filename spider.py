@@ -25,7 +25,6 @@ queue = deque()
 url2pageID = collections.OrderedDict()
 # PageID -> [PageTitle, LastModified, Size, WordFreqDict, Children]
 pageID2Meta = collections.OrderedDict()
-"""To-do forward index should use word id"""
 # PageID -> [[WordID, frequency]]
 forwardIndex = collections.OrderedDict()
 # Word -> WordID
@@ -34,7 +33,9 @@ word2wordID = collections.OrderedDict()
 invertedIndex = collections.OrderedDict()
 # Title -> TitleID
 title2TitleID = collections.OrderedDict()
-# TitleID -> [PageID]
+# PageID -> [TitleID]
+forwardIndexTitle = collections.OrderedDict()
+# TitleID -> [PageID, tf_idf]
 invertedIndexTitle = collections.OrderedDict()
 
 
@@ -64,9 +65,9 @@ def pushTitleInverted(title_tokens, page_id):
     for title_token in title_tokens:
         token_id = title2TitleID[title_token]
         if token_id not in invertedIndexTitle:
-            invertedIndexTitle[token_id] = [page_id]
+            invertedIndexTitle[token_id] = [[page_id, 0]]
         else:
-            invertedIndexTitle[token_id].append(page_id)
+            invertedIndexTitle[token_id].append([page_id, 0])
 
 
 def tokenizeAndClean(doc):
@@ -162,10 +163,15 @@ def crawl(url, parent_IDs : list):
         # Append inverted index
         pushInvertedIndex(freqlist, currentPageID)
 
-        # Index the title
+        # Title to title id
         title_tokens = tokenizeAndClean(page_title)
         indexTitle(title_tokens)
         indexTitle(bigrams(title_tokens))
+        # Title forward index
+        all_title_tokens = title_tokens.copy()
+        all_title_tokens.extend(bigrams(title_tokens))
+        all_title_tokens = [title2TitleID[x] for x in all_title_tokens]
+        forwardIndexTitle[currentPageID] = all_title_tokens
         # Inverted index of the title
         pushTitleInverted(title_tokens, currentPageID)
         pushTitleInverted(bigrams(title_tokens), currentPageID)
@@ -217,6 +223,7 @@ save2SqliteDict(forwardIndex, './db/forwardIndex.sqlite')
 save2SqliteDict(word2wordID, './db/word2wordID.sqlite')
 save2SqliteDict(invertedIndex, './db/invertedIndex.sqlite')
 save2SqliteDict(title2TitleID, './db/title2TitleID.sqlite')
+save2SqliteDict(forwardIndexTitle, './db/forwardIndexTitle.sqlite')
 save2SqliteDict(invertedIndexTitle, './db/invertedIndexTitle.sqlite')
 
 sys.exit()

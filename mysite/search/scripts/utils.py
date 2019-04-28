@@ -8,15 +8,13 @@ from nltk.corpus import stopwords
 from sqlitedict import SqliteDict
 
 
-def tokenizeAndClean(doc):
-    tokens = word_tokenize(doc)
+def clean(tokens):
     # Change to lower case
     tokens = [word.lower() for word in tokens]
     # Remove punctuation
     table = str.maketrans('', '', punctuation)
     tokens = [w.translate(table) for w in tokens]
-    tokens = [re.sub('[^A-Za-z0-9]+', '', w) for w in tokens]
-    tokens = [w for w in tokens if w != '']
+    tokens = [re.sub('[^A-Za-z0-9 ]+', '', w) for w in tokens]
     # Remove stopwords
     stop_words = set(stopwords.words('english'))
     tokens = [w for w in tokens if w not in stop_words]

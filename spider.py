@@ -13,7 +13,7 @@ import porter
 from string import punctuation
 import nltk
 from nltk import pos_tag, word_tokenize
-from nltk.corpus import stopwords
+# from nltk.corpus import stopwords
 nltk.download('stopwords')
 
 url = "http://www.cse.ust.hk"
@@ -35,8 +35,10 @@ invertedIndex = collections.OrderedDict()
 title2TitleID = collections.OrderedDict()
 # PageID -> [TitleID]
 forwardIndexTitle = collections.OrderedDict()
-# TitleID -> [PageID, tf_idf]
+# TitleID -> [[PageID, tf_idf]]
 invertedIndexTitle = collections.OrderedDict()
+
+stopwords = set([line.rstrip('\n') for line in open('./stopwords.txt')])
 
 
 def pushInvertedIndex(freqlist, pageID):
@@ -80,7 +82,8 @@ def tokenizeAndClean(doc):
     tokens = [re.sub('[^A-Za-z0-9]+', '', w) for w in tokens]
     tokens = [w for w in tokens if w != '']
     # Remove stopwords
-    stop_words = set(stopwords.words('english'))
+    # stop_words = set(stopwords.words('english'))
+    stop_words = stopwords
     tokens = [w for w in tokens if w not in stop_words]
     tokens = [porter.Porter(w) for w in tokens]
     return tokens
@@ -131,23 +134,30 @@ def crawl(url, parent_IDs : list):
 
         page_title = soup.find("title").text
         # last_mod_day = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        last_mod_day = datetime.now().strftime("%Y-%m-%d")
+        last_mod_date = datetime.now().strftime("%Y-%m-%d")
         try:
             raw_date = soup.find('span', {"class": "pull-right"})
             pattern = re.compile("\d+-\d+-\d+")
-            last_mod_day = re.findall(pattern, raw_date.text)[0]
+            last_mod_date = re.findall(pattern, raw_date.text)[0]
         except AttributeError:
             pass
 
         currentPageID = len(url2pageID)
+        # Check the page is being modified
         if url in url2pageID.keys():
-            print("Warning, visiting the same page twice")
+            mod_date = pageID2Meta[url2pageID[url]][1]
+            mod_date = datetime.strptime(mod_date, "%Y-%m-%d")
+            if mod_date >= datetime.strptime(last_mod_date, "%Y-%m-%d"):
+                raise Exception('The page is not modified')
+            # print("Warning, visiting the same page twice")
+            # Use the existing page ID, otherwise serious bug will occur
+            currentPageID = url2pageID[url]
         print(currentPageID)
 
         # Index the URL
         url2pageID[url] = currentPageID
         pageID2Meta[currentPageID] = [page_title,
-                                      last_mod_day,
+                                      last_mod_date,
                                       len(str(soup.contents)),
                                       {}, []]
 
@@ -217,14 +227,14 @@ def crawl(url, parent_IDs : list):
 
 
 crawl(url, [-1])
-save2SqliteDict(url2pageID, './db/url2pageID.sqlite')
-save2SqliteDict(pageID2Meta, './db/pageID2Meta.sqlite')
-save2SqliteDict(forwardIndex, './db/forwardIndex.sqlite')
-save2SqliteDict(word2wordID, './db/word2wordID.sqlite')
-save2SqliteDict(invertedIndex, './db/invertedIndex.sqlite')
-save2SqliteDict(title2TitleID, './db/title2TitleID.sqlite')
-save2SqliteDict(forwardIndexTitle, './db/forwardIndexTitle.sqlite')
-save2SqliteDict(invertedIndexTitle, './db/invertedIndexTitle.sqlite')
+# save2SqliteDict(url2pageID, './db/url2pageID.sqlite')
+# save2SqliteDict(pageID2Meta, './db/pageID2Meta.sqlite')
+# save2SqliteDict(forwardIndex, './db/forwardIndex.sqlite')
+# save2SqliteDict(word2wordID, './db/word2wordID.sqlite')
+# save2SqliteDict(invertedIndex, './db/invertedIndex.sqlite')
+# save2SqliteDict(title2TitleID, './db/title2TitleID.sqlite')
+# save2SqliteDict(forwardIndexTitle, './db/forwardIndexTitle.sqlite')
+# save2SqliteDict(invertedIndexTitle, './db/invertedIndexTitle.sqlite')
 
 sys.exit()
 

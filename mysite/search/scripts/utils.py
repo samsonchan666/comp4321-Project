@@ -3,9 +3,11 @@ import math
 from search.scripts import porter
 from string import punctuation
 from nltk import pos_tag, word_tokenize
-from nltk.corpus import stopwords
 
 from sqlitedict import SqliteDict
+
+stopwords = set([line.rstrip('\n') for line in open('../stopwords.txt')])
+
 
 # split should be list with length >= 2
 def split2Str(split):
@@ -22,7 +24,7 @@ def clean(tokens):
     tokens = [w.translate(table) for w in tokens]
     tokens = [re.sub('[^A-Za-z0-9 ]+', '', w) for w in tokens]
     # Remove stopwords
-    stop_words = set(stopwords.words('english'))
+    stop_words = stopwords
     tokens = [w for w in tokens if w not in stop_words]
     # Apply stemming to unigram and bigram
     for idx in range(len(tokens)):

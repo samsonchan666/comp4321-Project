@@ -17,13 +17,17 @@ def result(request):
         form = QueryForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
+            print("Origin query: ", end='')
             print(query)
+
             # Split double quotes phrases
             queries = utils.splitQuery(query)
             # Clean, stem ...
             queries = utils.clean(queries)
+            print("Processed query: ", end='')
             print(queries)
-
+            
+            print("Retriving pages ...")
             # query_results = retrivedb.retrive(queries)
             """Peter's retrive function"""
             peter_results = cosineSimilarity.runQuery(queries)

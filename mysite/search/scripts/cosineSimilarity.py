@@ -4,9 +4,15 @@
 import math, sqlitedict
 
 logBase=10	#This is for idf calculation but the value doesnt matter (but need to be greater than 1), since the idf value will be ranked
+multiplier=3	#This is the multiplier for the title cosine similarity
+
+# import os
+# os.chdir("/Users/apple/Downloads/comp4321-Project-master")
 
 url2pageID = sqlitedict.SqliteDict("../db/url2pageID.sqlite", autocommit=True)
 pageID2Meta = sqlitedict.SqliteDict("../db/pageID2Meta.sqlite", autocommit=True)
+forwardIndexTitle = sqlitedict.SqliteDict("../db/forwardIndexTitle.sqlite", autocommit=True)
+title2TitleID = sqlitedict.SqliteDict("../db/title2TitleID.sqlite", autocommit=True)
 
 #Calculate the TFIDF value for each word for each document, each element will be stored in a dictionary and result will be stored as a list
 def calcTFIDF(termFreq, invDocFreq):
@@ -107,11 +113,33 @@ def calcIDFFromTF(termFreq):
 
 
 #Given all documents sentences, it will give each term frequency of each document, which each element will be stored in a dictionary and result will be stored as a list
-def countTF(documents):
+def countTFFromDocuments(documents):
 	termFreq=[]
 	for document in documents:
 		termFreq.append({})
 		for eachWord in document.split():
+			if eachWord.lower() in termFreq[-1]:
+				termFreq[-1][eachWord.lower()]+=1
+			else:
+				termFreq[-1][eachWord.lower()]=1
+	return termFreq
+
+def makeTitleList():
+	titleList=[]
+	for i in forwardIndexTitle:
+		titleList.append([])
+		for j in forwardIndexTitle[i]:
+			for k in title2TitleID:
+				if j==title2TitleID[k]:
+					titleList[-1].append(k)
+					break
+	return titleList
+
+def countTFFromLists(lists):
+	termFreq=[]
+	for eachList in lists:
+		termFreq.append({})
+		for eachWord in eachList:
 			if eachWord.lower() in termFreq[-1]:
 				termFreq[-1][eachWord.lower()]+=1
 			else:
@@ -139,8 +167,10 @@ def combineToList(resultUsingTitle,resultUsingContent):
 		combined[-1]["link"]=resultUsingTitle[i][1]
 		combined[-1]["titleSimilarity"]=resultUsingTitle[i][0]
 		combined[-1]["contentSimilarity"]=resultUsingContent[i][0]
+		combined[-1]["totalSimilarity"]=(resultUsingTitle[i][0]*multiplier+resultUsingContent[i][0])/(1+multiplier)
 		combined[-1]["meta"]=pageID2Meta[i]
-		combined.sort(key=lambda x: (x["titleSimilarity"], x["contentSimilarity"]),reverse=True)
+		#combined.sort(key=lambda x: (x["titleSimilarity"], x["contentSimilarity"]),reverse=True)
+		combined.sort(key=lambda x: (x["totalSimilarity"]),reverse=True)
 	return combined
 
 def runQuery(query):
@@ -153,16 +183,14 @@ def runQuery(query):
 
 	#This part calculate the TFIDF value for the title for each document (which can be preloded)
 	#tfidf variable is in format list where each element is a document dictionary key:value = word:tfidfValue
-	documents=[]
-	for i in range(len(pageID2Meta)):
-		documents.append(pageID2Meta[i][0])
-	termFreq=countTF(documents)
-	invDocFreq=calcIDFFromDocuments(documents)
+	titleList=makeTitleList()
+	termFreq=countTFFromLists(titleList)
+	invDocFreq=calcIDFFromTF(termFreq)
 	tfidf=calcTFIDF(termFreq, invDocFreq)
 
 	#This is calculate the cosine similarity between query and the title
 	#The result resultUsingTitle variable is in format dictionary descending cos sim order with key:value = pageIndex:cosSimValue
-	cosSimQueryTitleDict=queryCosSimAllDocs(tfidf,len(documents),queryDict)
+	cosSimQueryTitleDict=queryCosSimAllDocs(tfidf,len(titleList),queryDict)
 	resultUsingTitle=rankCosSimAndGiveWebLink(cosSimQueryTitleDict)
 
 	#This part calculate the TFIDF value for the content (which can be preloded)
@@ -179,8 +207,8 @@ def runQuery(query):
 	#Combine two dictionary and sort the cosine similarity first by title then by content
 	#The result variable resultRank is in format list and each element is a dictionary containing (0)document index (1)document url (2)title similarity (3)content similarity (4)Metadata
 	resultRank=combineToList(resultUsingTitle,resultUsingContent)
-	# print(resultRank)
 	return resultRank
+	# print(resultRank)
 
 # runQuery("HKUST is the best university in hong kong. CSE is the best department in HKUST! Python is the most beautiful language in the world.")
 
@@ -202,7 +230,7 @@ documents.append("this is another example another example example")
 '''
 #These 3 variables can be preload
 #termFreq, invDocFreq, tfidf = [], {}, []
-#termFreq=countTF(documents)
+#termFreq=countTFFromDocuments(documents)
 #invDocFreq=calcIDFFromDocuments(documents)
 #tfidf=calcTFIDF(termFreq, invDocFreq)
 '''

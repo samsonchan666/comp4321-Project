@@ -60,7 +60,7 @@ def Porter(word):
             temp = word[0:-3]
             if updateM(temp)[2] > 0:
                 word = word.replace('eed', 'ee')
-        if 'v' in update[0][1:-1]:
+        elif 'v' in update[0][1:-1]:
             if word.endswith('ed'):
                 temp = word.replace('ed', '')
             elif word.endswith('ing'):
@@ -104,7 +104,7 @@ def Porter(word):
                      'alli': 'al',
                      'entli': 'ent',
                      'eli': 'e',
-                     'oucli': 'ous',
+                     'ousli': 'ous',
                      'ization': 'ize',
                      'ation': 'ate',
                      'ator': 'ate',
@@ -145,7 +145,7 @@ def Porter(word):
                 temp = word.replace(x, '')
                 if x == 'ion':
                     if (temp.endswith('s') == True) or (temp.endswith('t') == True):
-                        if updateM(temp[0:-1])[2] > 1:
+                        if updateM(temp)[2] > 1:
                             word = word.replace(x, '')
                 else:
                     if updateM(temp)[2] > 1:

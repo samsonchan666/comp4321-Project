@@ -9,10 +9,10 @@ multiplier=3	#This is the multiplier for the title cosine similarity
 # import os
 # os.chdir("/Users/apple/Downloads/comp4321-Project-master")
 
-url2pageID = sqlitedict.SqliteDict("../db/url2pageID.sqlite", autocommit=True)
-pageID2Meta = sqlitedict.SqliteDict("../db/pageID2Meta.sqlite", autocommit=True)
-forwardIndexTitle = sqlitedict.SqliteDict("../db/forwardIndexTitle.sqlite", autocommit=True)
-title2TitleID = sqlitedict.SqliteDict("../db/title2TitleID.sqlite", autocommit=True)
+url2pageID = sqlitedict.SqliteDict("./db/url2pageID.sqlite", autocommit=True)
+pageID2Meta = sqlitedict.SqliteDict("./db/pageID2Meta.sqlite", autocommit=True)
+forwardIndexTitle = sqlitedict.SqliteDict("./db/forwardIndexTitle.sqlite", autocommit=True)
+title2TitleID = sqlitedict.SqliteDict("./db/title2TitleID.sqlite", autocommit=True)
 
 #Calculate the TFIDF value for each word for each document, each element will be stored in a dictionary and result will be stored as a list
 def calcTFIDF(termFreq, invDocFreq):
@@ -210,7 +210,7 @@ def runQuery(query):
 	return resultRank
 	# print(resultRank)
 
-# runQuery("HKUST is the best university in hong kong. CSE is the best department in HKUST! Python is the most beautiful language in the world.")
+runQuery("HKUST is the best university in hong kong. CSE is the best department in HKUST! Python is the most beautiful language in the world.")
 
 ###Testing code for current directory###
 '''

@@ -3,7 +3,7 @@ import math
 
 # Url -> PageID
 url2pageID = SqliteDict('./db/url2pageID.sqlite', autocommit=True)
-# PageID -> [[WordID, frequency]]
+# PageID -> {WordID: frequency, ... }
 forwardIndex = SqliteDict('./db/forwardIndex.sqlite', autocommit=True)
 # PageID -> doc_norm
 docNorm = SqliteDict('./db/docNorm.sqlite', autocommit=True)
@@ -25,8 +25,10 @@ def comp_tf_idf():
         i += 1
         df = float(len(posting_list))
         idf = math.log(total_doc_no / df, 2)
-        tf_max = float(max([x[1] for x in posting_list]))
+        # tf_max = float(max([x[1] for x in posting_list]))
         for idx in range(len(posting_list)):
+            page_id = posting_list[idx][0]
+            tf_max = max(list(forwardIndex[page_id].values()))
             tf = float(posting_list[idx][1])
             tf_idf = tf / tf_max * idf
             posting_list[idx][2] = tf_idf
@@ -35,10 +37,10 @@ def comp_tf_idf():
 
 def comp_doc_norm():
     i = 0
-    for doc_id, forward_list in forwardIndex.items():
+    for doc_id, forward_dict in forwardIndex.items():
         print(i, len(forwardIndex))
         i += 1
-        word_list = [f_l[0] for f_l in forward_list]
+        word_list = list(forward_dict.keys())
         doc_norm = 0
         for word_id in word_list:
             posting_list = invertedIndex[word_id]

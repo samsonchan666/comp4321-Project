@@ -28,11 +28,10 @@ def result(request):
             print(queries)
             
             print("Retriving pages ...")
-            # query_results = retrivedb.retrive(queries)
+            query_results = retrivedb.retrive(queries)
             """Peter's retrive function"""
-            peter_results = cosineSimilarity.runQuery(queries)
-            query_results = retrivedb.reformatPeterResult(peter_results)
-            print("No of related pages:" + str(len(query_results)))
+            # peter_results = cosineSimilarity.runQuery(queries)
+            # query_results = retrivedb.reformatPeterResult(peter_results)
             return render(request, 'search/result.html', {'query_results': query_results})
         else:
             return render(request, 'search/index.html')
@@ -49,10 +48,10 @@ def similar(request):
             queries = retrivedb.getFreqWordAsQueryList(doc_id)
             print(queries)
 
-            # query_results = retrivedb.retrive(queries)
+            query_results = retrivedb.retrive(queries)
             """Peter's retrive function"""
-            peter_results = cosineSimilarity.runQuery(queries)
-            query_results = retrivedb.reformatPeterResult(peter_results)
+            # peter_results = cosineSimilarity.runQuery(queries)
+            # query_results = retrivedb.reformatPeterResult(peter_results)
             return render(request, 'search/result.html', {'query_results': query_results})
         else:
             return render(request, 'search/index.html')

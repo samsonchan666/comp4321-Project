@@ -1,7 +1,7 @@
 #  Comp4321 Search Engine Project
 Test program, spider and web server can be compiled and run by Python 3.6.
 
-Install the require libaries
+Install the required libaries
 ```
 pip install Django sqlitedict bs4 nltk requests
 ```

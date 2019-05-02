@@ -2,19 +2,19 @@ from sqlitedict import SqliteDict
 import math
 
 # Url -> PageID
-url2pageID = SqliteDict('./db/url2pageID.sqlite', autocommit=True)
+url2pageID = SqliteDict('./db/url2pageID.sqlite')
 # PageID -> {WordID: frequency, ... }
-forwardIndex = SqliteDict('./db/forwardIndex.sqlite', autocommit=True)
+forwardIndex = SqliteDict('./db/forwardIndex.sqlite')
 # PageID -> doc_norm
-docNorm = SqliteDict('./db/docNorm.sqlite', autocommit=True)
+docNorm = SqliteDict('./db/docNorm.sqlite')
 # WordID -> [[PageID, frequency, tf_idf]]
-invertedIndex = SqliteDict('./db/invertedIndex.sqlite', autocommit=True)
+invertedIndex = SqliteDict('./db/invertedIndex.sqlite')
 # PageID -> [TitleID]
-forwardIndexTitle = SqliteDict('./db/forwardIndexTitle.sqlite', autocommit=True)
+forwardIndexTitle = SqliteDict('./db/forwardIndexTitle.sqlite')
 # TitleID -> [PageID, tf_idf]
-invertedIndexTitle = SqliteDict('./db/invertedIndexTitle.sqlite', autocommit=True)
+invertedIndexTitle = SqliteDict('./db/invertedIndexTitle.sqlite')
 # PageID -> title_norm
-titleNorm = SqliteDict('./db/titleNorm.sqlite', autocommit=True)
+titleNorm = SqliteDict('./db/titleNorm.sqlite')
 
 
 def comp_tf_idf():
@@ -69,7 +69,7 @@ def comp_tf_idf_title():
         invertedIndexTitle[word_id] = posting_list
 
 
-def comp_doc_norm_title():
+def comp_title_norm():
     i = 0
     for doc_id, forward_list in forwardIndexTitle.items():
         print(i, len(forwardIndexTitle))
@@ -89,14 +89,21 @@ def comp_doc_norm_title():
 comp_tf_idf()
 comp_doc_norm()
 comp_tf_idf_title()
-comp_doc_norm_title()
+comp_title_norm()
 # print(invertedIndex)
 # x = dict(invertedIndex.items())
 
+
+invertedIndex.commit()
+docNorm.commit()
+invertedIndexTitle.commit()
+titleNorm.commit()
+
 url2pageID.close()
 forwardIndex.close()
-docNorm.close()
-invertedIndex.close()
 forwardIndexTitle.close()
+
+invertedIndex.close()
+docNorm.close()
 invertedIndexTitle.close()
 titleNorm.close()

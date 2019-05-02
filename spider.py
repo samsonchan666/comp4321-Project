@@ -17,9 +17,9 @@ from nltk import pos_tag, word_tokenize
 # nltk.download('stopwords')
 
 url = "http://www.cse.ust.hk"
-max_page = 300
+max_page = 700
 save_to_db = True
-save_html = False
+save_html = True
 
 # Create queue
 queue = deque()
@@ -125,10 +125,16 @@ def saveHTML(pageID, html):
 
 
 def save2SqliteDict(_dict: collections.OrderedDict, _dir):
-    sqliteDict = SqliteDict(_dir, autocommit=True)
+    # sqliteDict = SqliteDict(_dir, autocommit=True)
+    sqliteDict = SqliteDict(_dir)
     print("Saving database to" + _dir)
+    i_max = len(_dict) - 1
+    i = 0
     for key, value in _dict.items():
+        print(_dir, str(i), str(i_max))
+        i += 1
         sqliteDict[key] = value
+    sqliteDict.commit()
     sqliteDict.close()
 
 
@@ -137,7 +143,7 @@ def crawl(url, parent_IDs : list):
         return
     try:
         if ".pdf" in url:
-            raise Exception('Ingore pdf page')
+            raise Exception('Ignore pdf page')
         print(url)
         urlf = requests.get(url)
         soup = BeautifulSoup(urlf.text, 'html.parser')
@@ -156,7 +162,7 @@ def crawl(url, parent_IDs : list):
             pass
 
         currentPageID = len(url2pageID)
-        # Check the page is being modified
+        # If it is indexed, check the page is being modified
         if url in url2pageID.keys():
             mod_date = pageID2Meta[url2pageID[url]][1]
             mod_date = datetime.strptime(mod_date, "%Y-%m-%d")
@@ -241,7 +247,7 @@ def crawl(url, parent_IDs : list):
 
     # Pop one URL from the queue from the left side so that it can be crawled
     current = queue.popleft()
-    # Recursive call to crawl until the queue is populated with 100 URLs
+    # Recursive call to crawl
     crawl(current[0], current[1])
 
 

@@ -1,7 +1,7 @@
 from sqlitedict import SqliteDict
 
 # PageID -> [Parent1, Parent2 ,. ..]
-pageID2Parent = SqliteDict('./db/pageID2Parent.sqlite', autocommit=True)
+pageID2Parent = SqliteDict('./db/pageID2Parent.sqlite')
 # PageID -> [PageTitle, LastModified, Size, WordFreqDict, Children]
 pageID2Meta = SqliteDict('./db/pageID2Meta.sqlite')
 
@@ -21,5 +21,6 @@ for page_id in pageID2Meta.keys():
     parents = findParent(page_id)
     pageID2Parent[page_id] = parents
 
+pageID2Parent.commit()
 pageID2Parent.close()
 pageID2Meta.close()
